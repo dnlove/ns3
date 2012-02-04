@@ -1,7 +1,0 @@
-This is the implementation of Minstrel rate adaptation from Linux Kernel for ns-3 simulator, which I plan to maintain and provide bug fixes.
-
-You can find the files here:
-src/wifi/model/minstrel-wifi-manager.*
-example/wireless/multirate.cc
-~
-
