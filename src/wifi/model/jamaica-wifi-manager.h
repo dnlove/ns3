@@ -25,7 +25,6 @@
 
 #include "wifi-remote-station-manager.h"
 #include "minstrel-wifi-manager.h"
-#include "dcf-manager.h"
 #include "wifi-mode.h"
 #include "ns3/nstime.h"
 #include <vector>
@@ -40,7 +39,6 @@
 namespace ns3 {
 
 class JamaicaWifiRemoteStation;
-class DcfManager;
 
 /**
  * Data structure for a Jamaica Rate table
@@ -105,9 +103,8 @@ private:
   uint32_t m_nsupported;  ///< modes supported
   uint32_t m_addCreditThreshold;
   double m_raiseThreshold;
-  //Dcf *m_dcf;
 };
 
 }// namespace ns3
 
-#endif /* JAMAICA_WIFI_MANAGER_H */
+#endif /* MAICA_WIFI_MANAGER_H */

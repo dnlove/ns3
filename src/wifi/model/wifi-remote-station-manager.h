@@ -81,6 +81,7 @@ private:
 class WifiRemoteStationManager : public Object
 {
 public:
+  uint32_t GetCw();
   static TypeId GetTypeId (void);
 
   WifiRemoteStationManager ();

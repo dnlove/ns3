@@ -71,7 +71,7 @@ JamaicaWifiManager::GetTypeId (void)
     .AddConstructor<JamaicaWifiManager> ()
     .AddAttribute ("UpdateStatistics",
                    "The interval between updating statistics table ",
-                   TimeValue (Seconds (0.01)),
+                   TimeValue (Seconds (0.1)),
                    MakeTimeAccessor (&JamaicaWifiManager::m_updateStats),
                    MakeTimeChecker ())
     .AddAttribute ("EWMA", 
@@ -216,7 +216,6 @@ JamaicaWifiManager::DoReportDataFailed (WifiRemoteStation *st)
 {
   JamaicaWifiRemoteStation *station = (JamaicaWifiRemoteStation *)st;
 
-
   CheckInit(station);
   if (!station->m_initialized)
     {
@@ -224,16 +223,6 @@ JamaicaWifiManager::DoReportDataFailed (WifiRemoteStation *st)
     }
 
   station->m_longRetry++;
-
-  if (m_addCreditThreshold + 1 <= 30)
-  	m_addCreditThreshold += 1; 
-
-  
-  /*
-  m_raiseThreshold = static_cast<uint32_t>(((tempProb * (100 - m_ewmaLevel)) + (m_jamaicaTable[i].ewmaProb * m_ewmaLevel) )/100);
-    */
-
-
 
   if (station->m_longRetry <= 0)
     {
@@ -265,9 +254,6 @@ JamaicaWifiManager::DoReportDataOk (WifiRemoteStation *st,
 {
   JamaicaWifiRemoteStation *station = (JamaicaWifiRemoteStation *) st;
 
-  if (m_addCreditThreshold - 1 >= 10)
-  	m_addCreditThreshold -= 1;
-
   if (station->m_currentRate > 0 && station->m_isRetry == true)
     {
       station->m_txrate = station->m_currentRate;
@@ -290,7 +276,6 @@ JamaicaWifiManager::DoReportDataOk (WifiRemoteStation *st,
   station->m_ok++; 
   station->m_packetCount++;
 
-
   CheckRate (station);
 }
 
@@ -299,7 +284,6 @@ JamaicaWifiManager::DoReportFinalDataFailed (WifiRemoteStation *st)
 {
   JamaicaWifiRemoteStation *station = (JamaicaWifiRemoteStation *) st;
   NS_LOG_DEBUG ("DoReportFinalDataFailed m_txrate=" << station->m_txrate);
-
 
   if (station->m_currentRate > 0 && station->m_isRetry == true)
     {
@@ -543,10 +527,6 @@ JamaicaWifiManager::CheckRate(JamaicaWifiRemoteStation *station)
   double errorThres = station->m_ok * 3 / 10; 
   uint32_t nrate;
 
-
-  std::cout <<  "m_raise  " << m_addCreditThreshold << std::endl;
-
-
   enough = (station->m_ok + station->m_err >= m_addCreditThreshold);
 
   nrate = station->m_txrate;
@@ -589,8 +569,6 @@ JamaicaWifiManager::CheckRate(JamaicaWifiRemoteStation *station)
     {
       station->m_credit++; 
     }
-
-
 
   if (station->m_credit >= m_raiseThreshold)
     {
