@@ -276,7 +276,6 @@ MaicaWifiManager::DoReportDataOk (WifiRemoteStation *st,
   station->m_ok++; 
   station->m_packetCount++;
 
-  CheckRate (station);
 }
 
 void
