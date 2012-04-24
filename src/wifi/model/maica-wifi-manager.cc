@@ -316,7 +316,10 @@ MaicaWifiManager::DoGetDataMode (WifiRemoteStation *st,
     {
       CheckInit (station);
 
-      station->m_txrate= m_nsupported - 1;
+      if ( m_nsupported > 1) 
+        {
+          station->m_txrate= m_nsupported / 2;
+        }
     }
   UpdateStats (station) ;
 
