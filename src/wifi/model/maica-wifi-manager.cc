@@ -275,8 +275,8 @@ MaicaWifiManager::DoReportDataOk (WifiRemoteStation *st,
   m_maicaTable[station->m_txrate].numRateAttempt += station->m_retry;
   station->m_ok++; 
   station->m_packetCount++;
+  
 
-  CheckRate (station);
 }
 
 void
@@ -317,10 +317,9 @@ MaicaWifiManager::DoGetDataMode (WifiRemoteStation *st,
     {
       CheckInit (station);
 
-      station->m_txrate= m_nsupported - 1;
+      station->m_txrate= m_nsupported/2;
     }
   UpdateStats (station) ;
-
   return GetSupported (station, station->m_txrate);
 }
 
@@ -629,6 +628,7 @@ MaicaWifiManager::PrintTable (MaicaWifiRemoteStation *station)
 }
 
 } //namespace ns3
+
 
 
 

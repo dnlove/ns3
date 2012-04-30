@@ -224,6 +224,9 @@ JamaicaWifiManager::DoReportDataFailed (WifiRemoteStation *st)
 
   station->m_longRetry++;
 
+  //joint access 
+  m_raiseThreshold++;
+
   if (station->m_longRetry <= 0)
     {
       station->m_isRetry = true;
@@ -276,7 +279,6 @@ JamaicaWifiManager::DoReportDataOk (WifiRemoteStation *st,
   station->m_ok++; 
   station->m_packetCount++;
 
-  CheckRate (station);
 }
 
 void
@@ -306,6 +308,9 @@ JamaicaWifiManager::UpdateRetry (JamaicaWifiRemoteStation *station)
   station->m_retry = station->m_shortRetry + station->m_longRetry;
   station->m_shortRetry = 0;
   station->m_longRetry = 0;
+
+  //resetting it
+  m_raiseThreshold=10;
 }
 
 WifiMode
@@ -316,10 +321,13 @@ JamaicaWifiManager::DoGetDataMode (WifiRemoteStation *st,
   if (!station->m_initialized)
     {
       CheckInit (station);
-
-      station->m_txrate= m_nsupported - 1;
+ 
+      if ( m_nsupported > 1)
+        station->m_txrate= m_nsupported/2;
     }
   UpdateStats (station) ;
+ 
+//  std::cout << "\t" << station->m_txrate;
 
   return GetSupported (station, station->m_txrate);
 }

@@ -202,7 +202,8 @@ RraaWifiManager::ResetCountersBasic (RraaWifiRemoteStation *station)
 {
   if (!station->m_initialized)
     {
-      station->m_rate = GetMaxRate (station);
+      station->m_rate = 1;
+      //station->m_rate = GetMaxRate (station);
       station->m_initialized = true;
     }
   station->m_failed = 0;
