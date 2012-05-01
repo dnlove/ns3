@@ -309,8 +309,6 @@ JamaicaWifiManager::UpdateRetry (JamaicaWifiRemoteStation *station)
   station->m_shortRetry = 0;
   station->m_longRetry = 0;
 
-  //resetting it
-  m_raiseThreshold=10;
 }
 
 WifiMode
@@ -576,6 +574,9 @@ JamaicaWifiManager::CheckRate(JamaicaWifiRemoteStation *station)
   if (enough && station->m_err <= errorThres)
     {
       station->m_credit++; 
+
+      //resetting it
+      m_raiseThreshold=10;
     }
 
   if (station->m_credit >= m_raiseThreshold)
