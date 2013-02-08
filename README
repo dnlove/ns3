@@ -1,3 +1,9 @@
++ TERA (Throughput Enabled Rate Adaptation) is in a branch called tera 
+https://github.com/dnlove/ns3/tree/tera
+
+You can find the source here:
+
+src/wifi/model/tera-wifi-manager.*
 
 
 + Maica rate adaptation is in a branch called maica
